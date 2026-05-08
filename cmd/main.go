@@ -13,14 +13,14 @@ func main() {
 
 	if err := godotenv.Load(); err != nil {
 		log.Fatal(err.Error())
+		return
 	}
 
 	ctx := context.Background()
 
 	if _, err := db.CreateConnectionDB(ctx); err != nil {
-		panic(err)
-		//fmt.Println(err.Error())
-		//return
+		fmt.Println(err.Error())
+		return
 	}
 
 	fmt.Println("База подрублена!")
