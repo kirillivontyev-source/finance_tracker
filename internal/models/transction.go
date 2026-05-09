@@ -1,0 +1,12 @@
+package models
+
+import "time"
+
+type Transaction struct {
+	ID          int       `json:"id"`
+	Amount      float64   `json:"amount"`
+	Type        string    `json:"type"`
+	CategoryID  int       `json:"category_id"`
+	Description string    `json:"description"`
+	CreatedAt   time.Time `json:"created_at"`
+}

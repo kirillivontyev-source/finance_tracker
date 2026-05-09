@@ -1,0 +1,18 @@
+-- +goose Up
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    category_name VARCHAR(100),
+    monthly_limit DECIMAL(10,2)
+);
+CREATE TABLE transactions (
+    id SERIAL PRIMARY KEY,
+    amount DECIMAL(10,2),
+    type VARCHAR(10) CHECK (type IN ('income', 'expense')),
+    category_id INTEGER REFERENCES categories(id),
+    description VARCHAR(1000),
+    created_at TIMESTAMP
+);
+
+-- +goose Down
+DROP TABLE transactions;
+DROP TABLE categories;
