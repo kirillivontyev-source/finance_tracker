@@ -77,3 +77,18 @@ func (cr *CategoryRepository) UpdateCategoryName(ctx context.Context, id int, ne
 	return nil
 
 }
+
+func (cr *CategoryRepository) UpdateCategoryMonthlyLimit(ctx context.Context, id int, newLimit *float64) error {
+
+	sql := `UPDATE categories SET monthly_limit = $1 WHERE id = $2`
+
+	commandTag, err := cr.Conn.Exec(ctx, sql, newLimit, id)
+	if err != nil {
+		return err
+	}
+	if commandTag.RowsAffected() < 1 {
+		return fmt.Errorf("команда update не затрагивает ни одной строки")
+	}
+
+	return nil
+}
