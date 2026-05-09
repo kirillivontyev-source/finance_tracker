@@ -12,7 +12,7 @@ type CategoryRepository struct {
 	Conn *pgx.Conn
 }
 
-// создание нового репозитория
+// конструктор для подключения
 func NewCategoryRepositoty(conn *pgx.Conn) *CategoryRepository {
 	return &CategoryRepository{
 		Conn: conn,
@@ -22,9 +22,9 @@ func NewCategoryRepositoty(conn *pgx.Conn) *CategoryRepository {
 // получаем вссе данные таблицы категорий в слайс структуры категории
 func (cr *CategoryRepository) GetCategory(ctx context.Context) ([]models.Category, error) {
 
-	sql_Query := `SELECT * FROM categories`
+	sqlQuery := `SELECT * FROM categories`
 
-	query, err := cr.Conn.Query(ctx, sql_Query)
+	query, err := cr.Conn.Query(ctx, sqlQuery)
 	if err != nil {
 		//fmt.Println(err.Error())
 		return nil, err
