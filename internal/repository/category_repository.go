@@ -12,12 +12,14 @@ type CategoryRepository struct {
 	Conn *pgx.Conn
 }
 
+// создание нового репозитория
 func NewCategoryRepositoty(conn *pgx.Conn) *CategoryRepository {
 	return &CategoryRepository{
 		Conn: conn,
 	}
 }
 
+// получаем вссе данные таблицы категорий в слайс структуры категории
 func (cr *CategoryRepository) GetCategory(ctx context.Context) ([]models.Category, error) {
 
 	sql_Query := `SELECT * FROM categories`
@@ -32,6 +34,7 @@ func (cr *CategoryRepository) GetCategory(ctx context.Context) ([]models.Categor
 
 }
 
+// создание новой категории в табл
 func (cr *CategoryRepository) CreateCategory(ctx context.Context, category models.Category) error {
 
 	sql := `INSERT INTO categories (category_name, monthly_limit) VALUES ($1, $2)`
@@ -46,6 +49,7 @@ func (cr *CategoryRepository) CreateCategory(ctx context.Context, category model
 	return nil
 }
 
+// удаление категории по id
 func (cr *CategoryRepository) DeleteCategory(ctx context.Context, id int) error {
 
 	sql := `DELETE FROM categories WHERE categories.id = $1`
@@ -62,6 +66,7 @@ func (cr *CategoryRepository) DeleteCategory(ctx context.Context, id int) error 
 
 }
 
+// изменить имя категории
 func (cr *CategoryRepository) UpdateCategoryName(ctx context.Context, id int, newName string) error {
 
 	sql := `UPDATE categories SET category_name = $1 WHERE id = $2`
@@ -78,6 +83,7 @@ func (cr *CategoryRepository) UpdateCategoryName(ctx context.Context, id int, ne
 
 }
 
+// изменить месячный лимит категории
 func (cr *CategoryRepository) UpdateCategoryMonthlyLimit(ctx context.Context, id int, newLimit *float64) error {
 
 	sql := `UPDATE categories SET monthly_limit = $1 WHERE id = $2`
